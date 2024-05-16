@@ -84,6 +84,7 @@ this.peach = false;
   strokeWeight(0.4);
   stroke(this.faceColour);
   noFill();
+  scale(0.5);
 
   this.headHeight = map(this.faceHeight, 7.5, 10.5, 8, 16); //
   this.headYpos = map(this.faceHeight, 8, 16, 3, 7.5);
