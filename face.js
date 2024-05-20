@@ -51,6 +51,18 @@ function Face() {
    */  
   this.draw = function(positions) {
 
+//function for new face object
+//uncomment my_draw_segment
+//uncomment draw_segment
+//one square bracket == the array vs 2 square brackets (x or Y) coord
+//coordinate for center of face??
+//sliders translate to the AI aspects X relies on X
+//ai hair - hairtype
+//ai gender - colour
+//ai eye type - older = older/tired eye type
+//6 things in ai
+//small v big mouth
+//stubble
 
     let left_eye_pos = segment_average(positions.left_eye);
     let right_eye_pos = segment_average(positions.right_eye);
@@ -254,6 +266,9 @@ this.peach = false;
   if (this.stache == 1) {
       quad(-2, 4.2, 2, 4.2,3, this.mouthYpos, -3, this.mouthYpos);
   }
+
+  fill('green');
+  ellipse(0,0, 2, 2);
   
   
   
@@ -347,6 +362,10 @@ this.peach = false;
     }
     */
   };
+
+
+
+  //SLIDERS
 
   /* set internal properties based on list numbers 0-100 */
   this.setProperties = function(settings) {
