@@ -64,14 +64,13 @@ function Face() {
 //small v big mouth
 //stubble
 
-    let left_eye_pos = segment_average(positions.left_eye);
-    let right_eye_pos = segment_average(positions.right_eye);
+    
     
 
 //MY CODE STARTS HERE
 
-this.lip_value = 2;
-this.nose_value = 2;
+this.lip_value = 1;
+this.nose_value = 4;
 this.eye_value = 2;
 this.headWidth = 8;
 this.faceHeight = 7.5;
@@ -96,13 +95,13 @@ this.peach = false;
   strokeWeight(0.4);
   stroke(this.faceColour);
   noFill();
-  scale(0.5);
+  //scale(0.5);
 
   this.headHeight = map(this.faceHeight, 7.5, 10.5, 8, 16); //
   this.headYpos = map(this.faceHeight, 8, 16, 3, 7.5);
   this.sqhairHeight = map(this.headHeight, 8, 16, 8, 12)
   this.hWidth = map(this.headWidth, 8, 16, 3, 4);
-  
+  /*
   //DRAW HAIR
   fill(this.faceColour)
 
@@ -157,101 +156,33 @@ this.peach = false;
     rect(this.sideBrnXpos, -2.2, 3, 6.5,1);
     rect(-this.sideBrnXpos,-2.2, 3, 6.5,1);
   }
-
+*/
 //could split these functions
 
   //draws eyes, nose and mouth of character
 
-  //DRAWING THE EYES
-  this.eyeXpos = map(this.headWidth, 8, 16, 1.5, 3);
-  stroke(this.faceColour); //CHANGE BACK?
-  if (this.eye_value == 1) {
-    //tired eye
-    strokeWeight(0.7);
-    point(-this.eyeXpos,1.5);
-    point(this.eyeXpos, 1.5);
-    strokeWeight(0.37);
-    line(-this.eyeXpos+0.5,2.2, -this.eyeXpos-0.5, 2.7);
-    line(this.eyeXpos-0.5, 2.2, this.eyeXpos+0.5, 2.7)
-  } else if (this.eye_value == 2) {
-    //wide eye
-    strokeWeight(0.37);
-    noFill();
-    ellipse(-this.eyeXpos-0.2, 1.5, 2.5, 2.5);
-    ellipse(this.eyeXpos+0.2, 1.5, 2.5, 2.5);
-    strokeWeight(1.5);
-    point(-this.eyeXpos-0.2, 1.5);
-    point(this.eyeXpos+0.2, 1.5);
-  } else if (this.eye_value == 3){
-    //curved eye
-    strokeWeight(0.9);
-    noFill();
-    point(-this.eyeXpos-0.5,1.5);
-    point(this.eyeXpos+0.5, 1.5);
-    strokeWeight(0.37);
-    line(-this.eyeXpos+0.5,1.1, -this.eyeXpos-2, 1.1);
-    line(this.eyeXpos-0.5, 1.1, this.eyeXpos+2, 1.1)
-    arc(-this.eyeXpos-0.9, 1.15, 3, 2.5, 0, 90)
-    arc(this.eyeXpos+0.9, 1.15, 3, 2.5, 90,180)
-  } else if (this.eye_value ==4) {
-    //side eye
-    strokeWeight(0.9);
-    noFill();
-    point(-this.eyeXpos-1,1.5);
-    point(this.eyeXpos+0.5, 1.5);
-    strokeWeight(0.37);
-    line(-this.eyeXpos+0.5,1.1, -this.eyeXpos-2, 1.1);
-    line(this.eyeXpos-0.5, 1.1, this.eyeXpos+2, 1.1)
-    
-  }
+  //this.left_eye_posX = positions.left_eye[0][0];
+  //this.left_eye_posY = positions.left_eye[0][1];
+  //this.right_eye_posX = positions.right_eye[3][0];
+  //this.right_eye_posY = positions.right_eye[3][1];
+
   
-  //DRAW THE NOSES
-  noFill();
-  if (this.nose_value==1) {
-    //long point
-    strokeWeight(0.37)
-    beginShape(LINES)
-    vertex(0, 1);
-    vertex(-1, 3.5);
-    vertex(-1, 3.5);
-    vertex(0, 3.5)
-    endShape();
-  } else if (this.nose_value ==2){
-     //even point
-    strokeWeight(0.37)
-    beginShape(LINES)
-    vertex(0, 2.5);
-    vertex(-1, 3.5);
-    vertex(-1, 3.5);
-    vertex(0, 4)
-    endShape();   
-  } else if(this.nose_value ==5) {
-    //straight w/ curve bottom
-    strokeWeight(0.37)
-    line(0,1,-1,3.5);
-    arc(0, 3.5, 2,1, 0, 180);
-  } else if (this.nose_value == 4) {
-    //longer skinny
-    strokeWeight(0.37)
-    arc(0, 2.4, 1,3.2, 70, 250);
-  } else if(this.nose_value ==3) {
-    //wide
-    strokeWeight(0.37)
-    arc(0, 3.5, 2,1.3, 0, 180);
-    arc(-1.4, 3.5, 0.7,0.5, 0, 180);
-    arc(1.4, 3.5, 0.7,0.5, 0, 180);
-  }
   
+
+
   
   //DRAW THE LIPS
   this.mouthYpos = map(this.headHeight, 8, 16, 5, 6.5);
+
   if (this.lip_value == 1){
     //lip type 1 - no cupid bow
-    strokeWeight(0.37);
-    fill(colour)
-    line(-0.5, this.mouthYpos+0.4, 0.5, this.mouthYpos+0.4)
+    push();
+    //translate(positions.top_lip[8][0], positions.top_lip[8][1]);
+    strokeWeight(0.1);
+    fill(this.faceColour)
+    line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1])
     noStroke();
-    arc(0, this.mouthYpos, 3, 1.5, 180, 360);
+    arc(positions.top_lip[9][0], positions.top_lip[9][1], positions.top_lip[6][0]-positions.top_lip[0][0], positions.top_lip[8][1] - 1.2, 180, 360);
   } else if (this.lip_value == 2){
     //lip type 2 - cupid bow
     strokeWeight(0.37);
@@ -262,15 +193,124 @@ this.peach = false;
     arc(0.5, this.mouthYpos, 2, 1.5, 180, 360);
   } 
   
+  this.top_lip_mid = segment_average(positions.top_lip)
   //draw stache
   if (this.stache == 1) {
-      quad(-2, 4.2, 2, 4.2,3, this.mouthYpos, -3, this.mouthYpos);
+    push();
+    translate(positions.nose_tip[2][0],this.top_lip_mid[1]);
+    scale(0.3);
+    quad(-1.5, -1, 1.5, -1,3, 0, -3, 0);
+    pop();
+  }
+  
+  //DRAW THE NOSES
+  noFill();
+  if (this.nose_value==1) {
+    //long point
+    strokeWeight(0.1)
+    beginShape(LINES)
+    vertex(positions.nose_bridge[0][0], positions.nose_bridge[0][1]);
+    vertex(positions.nose_tip[0][0], positions.nose_tip[0][1]);
+    vertex(positions.nose_tip[0][0], positions.nose_tip[0][1]);
+    vertex(positions.nose_tip[4][0], positions.nose_tip[4][1]);
+    endShape();
+  } else if (this.nose_value ==2){
+     //short point (small)
+    strokeWeight(0.1)
+    beginShape(LINES)
+    vertex(positions.nose_bridge[2][0], positions.nose_bridge[2][1]);
+    vertex(positions.nose_tip[0][0], positions.nose_tip[0][1]);
+    vertex(positions.nose_tip[0][0], positions.nose_tip[0][1]);
+    vertex(positions.nose_tip[2][0], positions.nose_tip[2][1]);
+    endShape();  
+    /* 
+  } else if(this.nose_value ==3) {
+    //straight w/ curve bottom
+    strokeWeight(0.1)
+    line(positions.nose_bridge[0][0],positions.nose_bridge[0][1], positions.nose_tip[0][0], positions.nose_bridge[3][1]);
+    arc(positions.nose_bridge[3][0], positions.nose_bridge[3][3], 2,1, 0, 180);
+    */
+  } else if (this.nose_value == 3) {
+    //longer skinny
+    push();
+    translate(positions.nose_bridge[2][0],positions.nose_bridge[2][1]);
+    scale(0.5);
+    strokeWeight(0.2)
+    arc(0, 0, 1,3.2, 70, 250);
+    pop();
+  } else if(this.nose_value ==4) {
+    //wide
+    push();
+    translate(positions.nose_bridge[3][0],positions.nose_bridge[3][1]);
+    scale(0.4);
+    fill('white');
+    stroke(this.faceColour)
+    strokeWeight(0.25)
+    arc(0, 0, 2,1.3, 0, 180);
+    arc(-1.4, 0, 0.7,0.5, 0, 180);
+    arc(1.4, 0, 0.7,0.5, 0, 180);
+    pop();
+  }
+  
+
+
+
+
+
+
+
+
+
+  this.left_eye_pos = segment_average(positions.left_eye);
+  this.right_eye_pos = segment_average(positions.right_eye);
+
+  //DRAWING THE EYES
+  this.eyeXpos = map(this.headWidth, 8, 16, 1.5, 3);
+  ellipseMode(CENTER);
+  
+
+  stroke(this.faceColour); //CHANGE BACK?
+  if (this.eye_value == 1) {
+    //tired eye
+    strokeWeight(0.35);
+    point(this.left_eye_pos[0], this.left_eye_pos[1]);
+    point(this.right_eye_pos[0], this.right_eye_pos[1]);
+    strokeWeight(0.1);
+    line(positions.left_eye[3][0], positions.nose_bridge[0][1]+0.2, positions.left_eye[0][0], positions.nose_bridge[1][1]);
+    line(positions.right_eye[0][0], positions.nose_bridge[0][1]+0.2, positions.right_eye[3][0], positions.nose_bridge[1][1])
+  } else if (this.eye_value == 2) {
+    //wide eye
+    strokeWeight(0.1); //0.37 originally
+    fill('white');
+    ellipse(this.left_eye_pos[0], this.left_eye_pos[1], 1.3, 1.3);
+    ellipse(this.right_eye_pos[0], this.right_eye_pos[1], 1.3, 1.3);
+    strokeWeight(0.9);
+    point(this.left_eye_pos[0], this.left_eye_pos[1]);
+    point(this.right_eye_pos[0], this.right_eye_pos[1]);
+  } else if (this.eye_value == 3){
+    //curved eye
+    strokeWeight(0.5);
+    noFill();
+    point(this.left_eye_pos[0], this.left_eye_pos[1]+0.1);
+    point(this.right_eye_pos[0], this.right_eye_pos[1]+0.1);
+    strokeWeight(0.15);
+    line(positions.left_eyebrow[0][0], positions.left_eye[1][1], positions.nose_tip[0][0], positions.left_eye[2][1]);
+    line(positions.right_eyebrow[4][0], positions.right_eye[3][1], positions.nose_tip[4][0], positions.right_eye[1][1])
+    arc(this.left_eye_pos[0], this.left_eye_pos[1], 1.2, 1, 0, 90)
+    arc(this.right_eye_pos[0], this.right_eye_pos[1], 1.2, 1, 90,180)
+  /*} else if (this.eye_value ==4) {
+    //side eye
+    strokeWeight(0.5);
+    noFill();
+    point(this.left_eye_pos[0]-0.1, this.left_eye_pos[1]);
+    point(this.right_eye_pos[0]-0.1, this.right_eye_pos[1]);
+    strokeWeight(0.15);
+    line(positions.left_eyebrow[0][0], positions.left_eye[1][1], positions.nose_tip[0][0], positions.left_eye[2][1]);
+    line(positions.right_eyebrow[4][0], positions.right_eye[3][1], positions.nose_tip[4][0], positions.right_eye[1][1])
+   */ 
   }
 
-  fill('green');
-  ellipse(0,0, 2, 2);
-  
-  
+
   
 /*
 
@@ -341,7 +381,7 @@ this.peach = false;
    //ellipse(0,0, 0.5,0.5) center point
    //rect(-2,-2,4.5,4) sizing debug 
   }
-
+*/
   // example of a function *inside* the face object.
   // this draws a segment, and do_loop will connect the ends if true
   this.draw_segment = function(segment, do_loop) {
@@ -360,10 +400,10 @@ this.peach = false;
           line(px, py, nx, ny);
         }
     }
-    */
+    
   };
 
-
+  }
 
   //SLIDERS
 
