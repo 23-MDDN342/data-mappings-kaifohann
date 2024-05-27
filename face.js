@@ -7,7 +7,7 @@
 var DEBUG_MODE = false;
 
 // this can be used to set the number of sliders to show
-var NUM_SLIDERS = 3;
+var NUM_SLIDERS = 4;
 
 // other variables can be in here too
 // here's some examples for colors used
@@ -64,18 +64,33 @@ function Face() {
 //small v big mouth
 //stubble
 
+
+//fix eye positioning 
+//flip noses
+//second lip arcs have to be touching pls
+//add hair
+
+
+//facial hair yes/no
+//lips - smiling or not
+//noses - nose types - width
+//eyes - age
+//colour - masc/feminine
+//hairtype - hair up/down/hat etc
+
+
     
     
 
 //MY CODE STARTS HERE
 
-this.lip_value = 1;
-this.nose_value = 4;
-this.eye_value = 2;
+//this.lip_value ;
+//this.nose_value = 1;
+//this.eye_value;
 this.headWidth = 8;
 this.faceHeight = 7.5;
 this.MHair_type = 2;
-this.stache = 1;
+
 this.peach = false;
 
   this.centerX = 0;
@@ -166,10 +181,11 @@ this.peach = false;
   //this.right_eye_posX = positions.right_eye[3][0];
   //this.right_eye_posY = positions.right_eye[3][1];
 
-  
-  
+  strokeWeight(0.1);
+  fill('white');
+  rect(0,0,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
 
-
+  //this.lip_value = 2;
   
   //DRAW THE LIPS
   this.mouthYpos = map(this.headHeight, 8, 16, 5, 6.5);
@@ -183,28 +199,47 @@ this.peach = false;
     line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1])
     noStroke();
     arc(positions.top_lip[9][0], positions.top_lip[9][1], positions.top_lip[6][0]-positions.top_lip[0][0], positions.top_lip[8][1] - 1.2, 180, 360);
+    pop();
   } else if (this.lip_value == 2){
     //lip type 2 - cupid bow
+    push();
+    //translate(positions.top_lip[8][0], positions.top_lip[8][1]);
+    strokeWeight(0.1);
+    fill(this.faceColour)
+    line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1])
+    noStroke();
+    arc(positions.top_lip[10][0], positions.top_lip[10][1], 0.5, positions.top_lip[8][1] - 1.2, 180, 360);
+    arc(positions.top_lip[8][0], positions.top_lip[10][1], 0.5, positions.top_lip[8][1] - 1.2, 180, 360);
+    pop();
+
+    /*
     strokeWeight(0.37);
     fill(this.faceColour)
     line(-0.5, this.mouthYpos+0.4, 0.5, this.mouthYpos+0.4)
     noStroke();
     arc(-0.5, this.mouthYpos, 2, 1.5, 180, 360);
     arc(0.5, this.mouthYpos, 2, 1.5, 180, 360);
+    */
   } 
   
   this.top_lip_mid = segment_average(positions.top_lip)
   //draw stache
   if (this.stache == 1) {
     push();
+    fill(this.faceColour)
     translate(positions.nose_tip[2][0],this.top_lip_mid[1]);
     scale(0.3);
     quad(-1.5, -1, 1.5, -1,3, 0, -3, 0);
     pop();
   }
   
+
+
+
+
   //DRAW THE NOSES
-  noFill();
+  push()
+  fill('white');
   if (this.nose_value==1) {
     //long point
     strokeWeight(0.1)
@@ -243,7 +278,7 @@ this.peach = false;
     push();
     translate(positions.nose_bridge[3][0],positions.nose_bridge[3][1]);
     scale(0.4);
-    fill('white');
+    //fill('white');
     stroke(this.faceColour)
     strokeWeight(0.25)
     arc(0, 0, 2,1.3, 0, 180);
@@ -252,7 +287,7 @@ this.peach = false;
     pop();
   }
   
-
+  pop();
 
 
 
@@ -289,15 +324,17 @@ this.peach = false;
     point(this.right_eye_pos[0], this.right_eye_pos[1]);
   } else if (this.eye_value == 3){
     //curved eye
-    strokeWeight(0.5);
+    strokeWeight(0.1);
+    line(positions.left_eyebrow[0][0], positions.left_eye[1][1], positions.nose_tip[0][0], positions.left_eye[2][1]);
+    line(positions.right_eyebrow[4][0], positions.right_eye[3][1], positions.nose_tip[4][0], positions.right_eye[1][1])
+    fill('white');
+    arc(this.left_eye_pos[0], this.left_eye_pos[1], 1.2, 1, 0, 90)
+    arc(this.right_eye_pos[0], this.right_eye_pos[1], 1.2, 1, 90,180)
+    strokeWeight(0.4);
     noFill();
     point(this.left_eye_pos[0], this.left_eye_pos[1]+0.1);
     point(this.right_eye_pos[0], this.right_eye_pos[1]+0.1);
-    strokeWeight(0.15);
-    line(positions.left_eyebrow[0][0], positions.left_eye[1][1], positions.nose_tip[0][0], positions.left_eye[2][1]);
-    line(positions.right_eyebrow[4][0], positions.right_eye[3][1], positions.nose_tip[4][0], positions.right_eye[1][1])
-    arc(this.left_eye_pos[0], this.left_eye_pos[1], 1.2, 1, 0, 90)
-    arc(this.right_eye_pos[0], this.right_eye_pos[1], 1.2, 1, 90,180)
+    
   /*} else if (this.eye_value ==4) {
     //side eye
     strokeWeight(0.5);
@@ -409,17 +446,21 @@ this.peach = false;
 
   /* set internal properties based on list numbers 0-100 */
   this.setProperties = function(settings) {
-    this.num_eyes = int(map(settings[0], 0, 100, 1, 2));
-    this.eye_shift = map(settings[1], 0, 100, -2, 2);
-    this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
+    this.lip_value = int(map(settings[0], 0, 100, 1, 2));
+    this.nose_value = int(map(settings[1], 0, 100, 1, 4));
+    this.eye_value = int(map(settings[2], 0, 100, 1, 3));
+    this.stache = int(map(settings[3], 0, 100, 0, 1));
+
   }
 
   /* get internal properties as list of numbers 0-100 */
   this.getProperties = function() {
     let settings = new Array(3);
-    settings[0] = map(this.num_eyes, 1, 2, 0, 100);
-    settings[1] = map(this.eye_shift, -2, 2, 0, 100);
-    settings[2] = map(this.mouth_size, 0.5, 8, 0, 100);
+    settings[0] = map(this.lips_value, 1, 2, 0, 100);
+    settings[1] = map(this.nose_value, 1, 4, 0, 100);
+    settings[2] = map(this.eye_value, 1, 3, 0, 100);
+    settings[3] = map(this.stache, 0, 1, 0, 100);
+
     return settings;
   }
 }
