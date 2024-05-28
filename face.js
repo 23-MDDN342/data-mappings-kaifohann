@@ -4,7 +4,7 @@
  */  
 
 // remove this or set to false to enable full program (load will be slower)
-var DEBUG_MODE = false;
+var DEBUG_MODE = true;
 
 // this can be used to set the number of sliders to show
 var NUM_SLIDERS = 4;
@@ -85,11 +85,13 @@ function Face() {
 //MY CODE STARTS HERE
 
 //this.lip_value ;
-//this.nose_value = 1;
-//this.eye_value;
-this.headWidth = 8;
-this.faceHeight = 7.5;
-this.MHair_type = 2;
+//this.nose_value;
+//this.eye_value = 3;
+this.headWidth = positions.chin[16][0]-positions.chin[0][0]+0.5;
+this.faceHeight = positions.chin[8][1]*2.5;
+this.Hair_type = 4;
+//this.stache = 1;
+//rect(0,-0.2,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
 
 this.peach = false;
 
@@ -111,67 +113,134 @@ this.peach = false;
   stroke(this.faceColour);
   noFill();
   //scale(0.5);
-
-  this.headHeight = map(this.faceHeight, 7.5, 10.5, 8, 16); //
+  this.headHeight = positions.chin[8][1]*2.3 
+  //this.headHeight = map(this.faceHeight, 7.5, 10.5, 8, 16); //
   this.headYpos = map(this.faceHeight, 8, 16, 3, 7.5);
   this.sqhairHeight = map(this.headHeight, 8, 16, 8, 12)
   this.hWidth = map(this.headWidth, 8, 16, 3, 4);
-  /*
+  this.hairWidth =  map(this.headWidth, 8, 16, 10, 20);
   //DRAW HAIR
   fill(this.faceColour)
 
 
-  if (this.MHair_type == 1){
+  if (this.Hair_type == 1){
     //hat style
+    push();
+    translate(0,positions.nose_bridge[1][1]);
     fill(this.faceColour);
-    strokeWeight(0.4);
+    strokeWeight(0.1);
     //center hair and center place it at the headheight top
-    rect(0, -this.headHeight/3.9, this.headWidth+1, this.sqhairHeight, 2);
+    rect(0, -this.headHeight/3.9-0.2, this.headWidth+0.5, this.sqhairHeight-1.5, 1);
     //draw hat brim
-    strokeWeight(1)
-    this.hatBrimLength = map(this.headWidth, 10, 16, -8.5, -10)
-    line(this.centerX-this.headWidth/2, this.headYpos-this.faceHeight/2, this.hatBrimLength, this.headYpos-this.faceHeight/2);
+    let hat_direction;
+    if((positions.chin[14][0] - positions.nose_tip[4][0]) < (positions.nose_tip[0][0] - positions.chin[2][0])) {
+      hat_direction = 5;
+    } else {
+      hat_direction = -3;
+  }
+    strokeWeight(0.3)
+    this.hatBrimLength = map(this.headWidth, 10, 16, -8.5, -13.5);
+    line(this.centerX-this.headWidth/2, this.headYpos-this.faceHeight/2, positions.chin[0][1] + hat_direction, this.headYpos-this.faceHeight/2);
     //DRAW FACE with top corners square
-    strokeWeight(0.4);
+    strokeWeight(0.15);
     fill('white');
-    rect(this.centerX, this.headYpos, this.headWidth, this.faceHeight, 0,0,2,2);
-
-  } else if (this.MHair_type == 2) {
+    rect(this.centerX, this.headYpos, this.headWidth, this.faceHeight, 0,0,1,1);
+    pop();
+  } else if (this.Hair_type == 2) {
     //balding style
-    translate(0,-(this.headHeight/this.faceHeight))
+    push()
+    //rectMode(CENTER);
+    translate(0,positions.nose_bridge[1][1])
+    //scale(0.6)
+    
+    //translate(0,-0.2,positions.chin[16][0]-positions.chin[0][0]+0.5);
+    //rect(0,-0.2,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
     //DRAW FACE with everything rounded 
-    strokeWeight(0.4);
+    strokeWeight(0.1);
     fill('white');
-    rect(this.centerX, this.headYpos-(this.headHeight/this.faceHeight), this.headWidth, this.headHeight+(this.headHeight/this.faceHeight), 2);
+    rect(this.centerX, this.headYpos-(this.headHeight/this.faceHeight), this.headWidth, this.headHeight+(this.headHeight/this.faceHeight), 0.5);
     //draw hair sides + head spots
-    this.sideHairLength = map(this.faceHeight, 7.5, 10.5, 2, 6)
+    this.sideHairLength = map(this.faceHeight, 7.5, 10.5, 2, 5.7)
     fill(this.faceColour);
-    strokeWeight(0.4)
-    rect(this.centerX-this.headWidth/2,this.headYpos-this.faceHeight/2+1, this.hWidth-2, this.sideHairLength, 0.5);
-    rect(this.centerX+this.headWidth/2,this.headYpos-this.faceHeight/2+1, this.hWidth-2, this.sideHairLength, 0.5);
-    point(this.centerX+this.headWidth/2-2.5, 0-this.headHeight/2+this.headYpos)
-    strokeWeight(0.6);
-    point(this.centerX+this.headWidth/2-2, 0-this.headHeight/2+this.headYpos+0.5)
-
-  } else if (this.MHair_type == 3) {
+    strokeWeight(0.15)
+    rect(this.centerX-this.headWidth/2,this.headYpos-this.faceHeight/2+0.6, this.hWidth-2, this.sideHairLength, 0.2);
+    rect(this.centerX+this.headWidth/2,this.headYpos-this.faceHeight/2+0.6, this.hWidth-2, this.sideHairLength, 0.2);
+    point(this.centerX+this.headWidth/2-0.9, -this.headHeight/2+this.headYpos-0.9)
+    strokeWeight(0.3);
+    point(this.centerX+this.headWidth/2-0.7, -this.headHeight/2+this.headYpos-0.6)
+    pop()
+  } /*else if (this.Hair_type == 3) {
     //big hair/russian hat vibe
-
+    push();
+    translate(0,positions.nose_bridge[1][1])
     //draw flat base
     fill(this.faceColour);
+    strokeWeight(0.2);
+    //center hair and center place it at the headheight top
+    rect(0, -this.headHeight/3.9, this.headWidth, this.sqhairHeight, 0.5) 
+    //DRAW FACE with top corners square
+    //strokeWeight(0.2);
+    fill('white');
+    rect(this.centerX, this.headYpos, this.headWidth, this.faceHeight, 0,0,0.5,0.5);
+    
+    //DRAW SIDE BURNS/hat sides
+    fill(this.faceColour)
+    this.sideBrnXpos = map(this.headWidth, 8, 16, -4.8, -10)
+    rect(this.sideBrnXpos, -2, 1, 3,0.3);
+    rect(-this.sideBrnXpos,-2, 1, 3,0.3);
+    pop();
+
+
+
+
+
+
+
+    //FEM hair starts here
+  } else if (this.Hair_type == 4) {
+    //flat head hair 
+    //DRAW RECTANGLE HAIR BASE
+    noStroke();
+    let sqhairHeight = map(this.headHeight, 8, 16, 8, 12)
+    fill(this.faceColour)
+     //center hair and center place it at the headheight top
+    rect(0, -this.headHeight/3.9, this.hairWidth, this.sqhairHeight, 2); 
+    //DRAW SIDES OF LONG HAIR
+    fill(this.faceColour)
+    let hXpos = map(this.headWidth, 8, 16, -4, -8)
+    rect(hXpos, 4.2, hWidth, 11,0,0,1,1);
+    rect(-hXpos,4.2, hWidth, 11,0,0,1,1);
+
+
+
+  } 
+  /*
+  
+  else if (Fhair_type == 2){
+    //rounded head hair 
+    noStroke();
+    let arcHeight = map(headHeight, 8, 16,12,18);
+    arc(0, -1,hairWidth,arcHeight, 180, 360);
+    //DRAW SIDES OF LONG HAIR
+    fill(faceColour)
+    let hXpos = map(headWidth, 8, 16, -4, -8)
+    rect(hXpos, 4.2, hWidth, 11,0,0,hairCurve1,hairCurve2);
+    rect(-hXpos,4.2, hWidth, 11,0,0,hairCurve2,hairCurve1);
+  } else if (Fhair_type == 3) {
+    //hair with bun
+    fill(faceColour);
     strokeWeight(0.4);
     //center hair and center place it at the headheight top
-    rect(0, -this.headHeight/3.9, this.headWidth, this.sqhairHeight, 2) 
-    //DRAW FACE with top corners square
-    strokeWeight(0.4);
-    fill('white');
-    rect(this.centerX, this.headYpos, this.headWidth, this.faceHeight, 0,0,2,2);
-    //DRAW SIDE BURNS
-    fill(this.faceColour)
-    this.sideBrnXpos = map(this.headWidth, 8, 16, -4.8, -8.4)
-    rect(this.sideBrnXpos, -2.2, 3, 6.5,1);
-    rect(-this.sideBrnXpos,-2.2, 3, 6.5,1);
+    rect(0, headHeight-(headHeight*1.1), hairWidth-1, sqhairHeight, 2);
+    //draw bun
+    ellipse(0,-headHeight+(headHeight*0.45), 4, 4);
   }
+
+  
+
 */
+
+
 //could split these functions
 
   //draws eyes, nose and mouth of character
@@ -181,67 +250,84 @@ this.peach = false;
   //this.right_eye_posX = positions.right_eye[3][0];
   //this.right_eye_posY = positions.right_eye[3][1];
 
+  //DRAW FACE
   strokeWeight(0.1);
   fill('white');
-  rect(0,0,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
+  //rect(0,-0.2,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
 
   //this.lip_value = 2;
   
   //DRAW THE LIPS
   this.mouthYpos = map(this.headHeight, 8, 16, 5, 6.5);
+  push()
+  translate(0, 0.2);
 
   if (this.lip_value == 1){
     //lip type 1 - no cupid bow
-    push();
+    //push();
     //translate(positions.top_lip[8][0], positions.top_lip[8][1]);
     strokeWeight(0.1);
     fill(this.faceColour)
     line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1])
     noStroke();
     arc(positions.top_lip[9][0], positions.top_lip[9][1], positions.top_lip[6][0]-positions.top_lip[0][0], positions.top_lip[8][1] - 1.2, 180, 360);
-    pop();
+    //pop();
   } else if (this.lip_value == 2){
     //lip type 2 - cupid bow
     push();
-    //translate(positions.top_lip[8][0], positions.top_lip[8][1]);
     strokeWeight(0.1);
     fill(this.faceColour)
     line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1])
     noStroke();
-    arc(positions.top_lip[10][0], positions.top_lip[10][1], 0.5, positions.top_lip[8][1] - 1.2, 180, 360);
-    arc(positions.top_lip[8][0], positions.top_lip[10][1], 0.5, positions.top_lip[8][1] - 1.2, 180, 360);
+    arc(positions.top_lip[10][0], positions.top_lip[10][1], 0.8, positions.top_lip[8][1] - 1.2, 180, 360);
+    arc(positions.top_lip[10][0]+0.5, positions.top_lip[10][1], 0.8, positions.top_lip[8][1] - 1.2, 180, 360);
     pop();
-
-    /*
-    strokeWeight(0.37);
-    fill(this.faceColour)
-    line(-0.5, this.mouthYpos+0.4, 0.5, this.mouthYpos+0.4)
-    noStroke();
-    arc(-0.5, this.mouthYpos, 2, 1.5, 180, 360);
-    arc(0.5, this.mouthYpos, 2, 1.5, 180, 360);
-    */
-  } 
+  } else if (this.lip_value == 3) {
+    line(positions.bottom_lip[2][0], positions.bottom_lip[2][1], positions.bottom_lip[4][0], positions.bottom_lip[4][1]);
+  }
   
   this.top_lip_mid = segment_average(positions.top_lip)
   //draw stache
   if (this.stache == 1) {
     push();
+    strokeWeight(0.1)
     fill(this.faceColour)
-    translate(positions.nose_tip[2][0],this.top_lip_mid[1]);
+    translate(positions.top_lip[9][0],positions.top_lip[9][1]);
     scale(0.3);
     quad(-1.5, -1, 1.5, -1,3, 0, -3, 0);
     pop();
-  }
+  } 
   
+  pop();
 
 
 
 
   //DRAW THE NOSES
-  push()
+
   fill('white');
+  
   if (this.nose_value==1) {
     //long point
+    push();
+    translate(positions.nose_bridge[0][0], positions.nose_bridge[0][1]);
+    scale(0.35)
+    let nose_direction;
+    if((positions.chin[14][0] - positions.nose_tip[4][0]) < (positions.nose_tip[0][0] - positions.chin[2][0])) {
+      nose_direction = 1;
+    } else {
+      nose_direction = -1;
+  }
+    
+    strokeWeight(0.3)
+    beginShape(LINES)
+    vertex(0, 1);
+    vertex(nose_direction, 3.5);
+    vertex(nose_direction, 3.5);
+    vertex(0, 3.5)
+    endShape();
+    pop()
+    /*
     strokeWeight(0.1)
     beginShape(LINES)
     vertex(positions.nose_bridge[0][0], positions.nose_bridge[0][1]);
@@ -249,8 +335,28 @@ this.peach = false;
     vertex(positions.nose_tip[0][0], positions.nose_tip[0][1]);
     vertex(positions.nose_tip[4][0], positions.nose_tip[4][1]);
     endShape();
+    */
   } else if (this.nose_value ==2){
      //short point (small)
+    push();
+    translate(positions.nose_bridge[0][0], positions.nose_bridge[0][1] - 0.1);
+    scale(0.35)
+    strokeWeight(0.3)
+
+    let nose_direction;
+    if((positions.chin[14][0] - positions.nose_tip[4][0]) < (positions.nose_tip[0][0] - positions.chin[2][0])) {
+       nose_direction = 1;
+     } else {
+       nose_direction = -1;
+    }
+    beginShape(LINES)
+    vertex(0, 2.5);
+    vertex(nose_direction, 3.5);
+    vertex(nose_direction, 3.5);
+    vertex(0, 4)
+    endShape(); 
+    pop()
+/*
     strokeWeight(0.1)
     beginShape(LINES)
     vertex(positions.nose_bridge[2][0], positions.nose_bridge[2][1]);
@@ -266,15 +372,42 @@ this.peach = false;
     arc(positions.nose_bridge[3][0], positions.nose_bridge[3][3], 2,1, 0, 180);
     */
   } else if (this.nose_value == 3) {
-    //longer skinny
+    //longer skinny round bottom
+    push();
+    translate(positions.nose_bridge[0][0], positions.nose_bridge[0][1]);
+    scale(0.3);
+    strokeWeight(0.35);
+
+    let nose_direction;
+    if((positions.chin[14][0] - positions.nose_tip[4][0]) < (positions.nose_tip[0][0] - positions.chin[2][0])) {
+       nose_direction = 1;
+     } else {
+       nose_direction = -1;
+    }
+    line(0,1,nose_direction,3.5);
+    arc(0, 3.5, 2,1, 0, 180);
+    pop();
+    /*
     push();
     translate(positions.nose_bridge[2][0],positions.nose_bridge[2][1]);
     scale(0.5);
     strokeWeight(0.2)
     arc(0, 0, 1,3.2, 70, 250);
     pop();
+    */
   } else if(this.nose_value ==4) {
     //wide
+    push();
+    translate(positions.nose_bridge[0][0], positions.nose_bridge[0][1]);
+    scale(0.3);
+    strokeWeight(0.35);
+    strokeWeight(0.37)
+    arc(0, 3.5, 2,1.3, 0, 180);
+    arc(-1.4, 3.5, 0.7,0.5, 0, 180);
+    arc(1.4, 3.5, 0.7,0.5, 0, 180);
+
+    pop();
+    /*
     push();
     translate(positions.nose_bridge[3][0],positions.nose_bridge[3][1]);
     scale(0.4);
@@ -285,9 +418,10 @@ this.peach = false;
     arc(-1.4, 0, 0.7,0.5, 0, 180);
     arc(1.4, 0, 0.7,0.5, 0, 180);
     pop();
+    */
   }
   
-  pop();
+
 
 
 
@@ -301,20 +435,61 @@ this.peach = false;
 
   //DRAWING THE EYES
   this.eyeXpos = map(this.headWidth, 8, 16, 1.5, 3);
-  ellipseMode(CENTER);
+  //ellipseMode(CENTER);
   
 
   stroke(this.faceColour); //CHANGE BACK?
   if (this.eye_value == 1) {
     //tired eye
+    push()
+    scale(0.3);
+    translate(positions.left_eyebrow[2][0]-0.5, positions.left_eyebrow[2][1]-2.5);
+    strokeWeight(0.7);
+    point(-this.eyeXpos,1.5);
+    strokeWeight(0.37);
+    line(-this.eyeXpos+0.5,2.2, -this.eyeXpos-0.5, 2.7);
+    pop();
+
+    push();
+    scale(0.3);
+    translate(positions.right_eyebrow[2][0]+0.5, positions.right_eyebrow[2][1]-2.5);
+    strokeWeight(0.7);
+    point(this.eyeXpos, 1.5);
+    strokeWeight(0.37);
+    line(this.eyeXpos-0.5, 2.2, this.eyeXpos+0.5, 2.7)
+
+   
+    /*
     strokeWeight(0.35);
     point(this.left_eye_pos[0], this.left_eye_pos[1]);
     point(this.right_eye_pos[0], this.right_eye_pos[1]);
     strokeWeight(0.1);
     line(positions.left_eye[3][0], positions.nose_bridge[0][1]+0.2, positions.left_eye[0][0], positions.nose_bridge[1][1]);
     line(positions.right_eye[0][0], positions.nose_bridge[0][1]+0.2, positions.right_eye[3][0], positions.nose_bridge[1][1])
+    */
   } else if (this.eye_value == 2) {
     //wide eye
+
+    push()
+    scale(0.43);
+    translate(positions.left_eyebrow[2][0]+0.3, positions.left_eyebrow[2][1]-2);
+    strokeWeight(0.24);
+    fill('white');
+    ellipse(-this.eyeXpos-0.2, 1.5, 2.5, 2.5);
+    strokeWeight(1.5);
+    point(-this.eyeXpos-0.2, 1.5);
+    pop()
+    push() 
+    scale(0.43);
+    translate(positions.right_eyebrow[2][0]-0.3, positions.right_eyebrow[2][1]-2);
+    
+    strokeWeight(0.24);
+    fill('white');
+    ellipse(this.eyeXpos+0.2, 1.5, 2.5, 2.5);
+    strokeWeight(1.5);
+    point(this.eyeXpos+0.2, 1.5);
+    pop();
+    /*
     strokeWeight(0.1); //0.37 originally
     fill('white');
     ellipse(this.left_eye_pos[0], this.left_eye_pos[1], 1.3, 1.3);
@@ -322,8 +497,32 @@ this.peach = false;
     strokeWeight(0.9);
     point(this.left_eye_pos[0], this.left_eye_pos[1]);
     point(this.right_eye_pos[0], this.right_eye_pos[1]);
+    */
   } else if (this.eye_value == 3){
     //curved eye
+
+    push()
+    scale(0.37);
+    translate(positions.left_eyebrow[2][0]+0.4, positions.left_eyebrow[2][1]-2);
+    strokeWeight(0.8);
+    noFill();
+    point(-this.eyeXpos-0.5,1.5);
+    strokeWeight(0.28);
+    line(-this.eyeXpos+0.5,1.1, -this.eyeXpos-2, 1.1);
+    arc(-this.eyeXpos-0.9, 1.15, 3, 2.5, 0, 90);
+    pop()
+    push();
+    scale(0.37);
+    translate(positions.right_eyebrow[2][0]-0.4, positions.right_eyebrow[2][1]-2);
+    strokeWeight(0.8);
+    noFill();
+    point(this.eyeXpos+0.5, 1.5);
+    strokeWeight(0.28);
+    line(this.eyeXpos-0.5, 1.1, this.eyeXpos+2, 1.1)
+    arc(this.eyeXpos+0.9, 1.15, 3, 2.5, 90,180)
+    pop();
+
+    /*
     strokeWeight(0.1);
     line(positions.left_eyebrow[0][0], positions.left_eye[1][1], positions.nose_tip[0][0], positions.left_eye[2][1]);
     line(positions.right_eyebrow[4][0], positions.right_eye[3][1], positions.nose_tip[4][0], positions.right_eye[1][1])
@@ -334,7 +533,7 @@ this.peach = false;
     noFill();
     point(this.left_eye_pos[0], this.left_eye_pos[1]+0.1);
     point(this.right_eye_pos[0], this.right_eye_pos[1]+0.1);
-    
+    */
   /*} else if (this.eye_value ==4) {
     //side eye
     strokeWeight(0.5);
@@ -446,7 +645,7 @@ this.peach = false;
 
   /* set internal properties based on list numbers 0-100 */
   this.setProperties = function(settings) {
-    this.lip_value = int(map(settings[0], 0, 100, 1, 2));
+    this.lip_value = int(map(settings[0], 0, 100, 1, 3));
     this.nose_value = int(map(settings[1], 0, 100, 1, 4));
     this.eye_value = int(map(settings[2], 0, 100, 1, 3));
     this.stache = int(map(settings[3], 0, 100, 0, 1));
@@ -456,7 +655,7 @@ this.peach = false;
   /* get internal properties as list of numbers 0-100 */
   this.getProperties = function() {
     let settings = new Array(3);
-    settings[0] = map(this.lips_value, 1, 2, 0, 100);
+    settings[0] = map(this.lips_value, 1, 3, 0, 100);
     settings[1] = map(this.nose_value, 1, 4, 0, 100);
     settings[2] = map(this.eye_value, 1, 3, 0, 100);
     settings[3] = map(this.stache, 0, 1, 0, 100);
