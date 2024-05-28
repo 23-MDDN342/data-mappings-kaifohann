@@ -89,7 +89,7 @@ function Face() {
 //this.eye_value = 3;
 this.headWidth = positions.chin[16][0]-positions.chin[0][0]+0.5;
 this.faceHeight = positions.chin[8][1]*2.5;
-this.Hair_type = 4;
+this.Hair_type = 1;
 //this.stache = 1;
 //rect(0,-0.2,positions.chin[16][0]-positions.chin[0][0]+0.5, positions.chin[8][1]*2.5, 0.5)
 
