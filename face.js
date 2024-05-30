@@ -1,16 +1,7 @@
-/*
- * FaceMap class - holds all informaiton about one mapped
- * face and is able to draw itself.
- */  
-
-// remove this or set to false to enable full program (load will be slower)
 var DEBUG_MODE = false;
 
-// this can be used to set the number of sliders to show
 var NUM_SLIDERS = 9;
 
-
-// example of a global function
 // given a segment, this returns the average point [x, y]
 function segment_average(segment) {
   let sum_x = 0;
@@ -23,14 +14,10 @@ function segment_average(segment) {
   return [sum_x / s_len , sum_y / s_len ];
 }
 
-// This where you define your own face object
 function Face() {
 
-  this.draw = function(positions) {
+this.draw = function(positions) {
 
-
-    
-    
 
 this.headWidth = positions.chin[16][0]-positions.chin[0][0]+0.5;
 this.faceHeight = positions.chin[8][1]*2.5;
@@ -177,7 +164,7 @@ this.centerX = 0;
     stroke(this.faceColour);
     fill('white');
     rect(this.centerX, this.headYpos-1, this.headWidth, this.faceHeight-0.5, 0,0,1,1);
-  } else if (this.Hair_type ==5) {
+  } else if (this.Hair_type == 5) {
     //hair up bun
     fill(this.faceColour);
     strokeWeight(0.2);
@@ -200,10 +187,6 @@ this.centerX = 0;
     endShape(CLOSE);
     pop();
   }
-
-
-  //DRAW FACE
-
 
   strokeWeight(0.1);
   fill('white');
@@ -363,6 +346,7 @@ this.centerX = 0;
     line(-this.eyeXpos+0.5,1.1, -this.eyeXpos-2, 1.1);
     arc(-this.eyeXpos-0.9, 1.15, 3, 2.5, 0, 90);
     pop()
+
     push();
     scale(0.37);
     translate(positions.right_eyebrow[2][0]-0.4, positions.right_eyebrow[2][1]-2);
@@ -418,7 +402,6 @@ this.centerX = 0;
   rect(this.eyeXpos-1, 4, 0.2, 0.8, 1)
   pop();
 
-  // example of a function *inside* the face object.
   // this draws a segment, and do_loop will connect the ends if true
   this.draw_segment = function(segment, do_loop) {
     for(let i=0; i<segment.length; i++) {
